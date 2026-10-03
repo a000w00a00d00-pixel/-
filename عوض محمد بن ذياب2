@@ -1,110 +1,61 @@
 using System;
 using System.Collections.Generic;
 
-// Base Class
-class Person
+class Shape
 {
-    public string Name { get; set; }
-
-    public Person(string name)
+    public virtual double CalculateArea()
     {
-        Name = name;
-    }
-
-    // Virtual Method
-    public virtual void DisplayInfo()
-    {
-        Console.WriteLine($"Name: {Name}");
+        return 0;
     }
 }
 
-// Derived Class 1: Student
-class Student : Person
+class Circle : Shape
 {
-    public int StudentId { get; set; }
+    public double Radius { get; set; }
 
-    public Student(string name, int studentId) : base(name)
+    public Circle(double radius)
     {
-        StudentId = studentId;
+        Radius = radius;
     }
 
-    // Override DisplayInfo
-    public override void DisplayInfo()
+    public override double CalculateArea()
     {
-        base.DisplayInfo();
-        Console.WriteLine($"Student ID: {StudentId}");
+        return Math.PI * Radius * Radius;
     }
 }
 
-// Derived Class 2: Employee
-class Employee : Person
+class Rectangle : Shape
 {
-    public double Salary { get; set; }
+    public double Width { get; set; }
+    public double Height { get; set; }
 
-    public Employee(string name, double salary) : base(name)
+    public Rectangle(double width, double height)
     {
-        Salary = salary;
+        Width = width;
+        Height = height;
     }
 
-    // Override DisplayInfo
-    public override void DisplayInfo()
+    public override double CalculateArea()
     {
-        base.DisplayInfo();
-        Console.WriteLine($"Salary: ${Salary}");
-    }
-}
-
-// Derived Class 3: Teacher
-class Teacher : Employee
-{
-    public string CourseName { get; set; }
-
-    // Teacher inherits from Employee, so it receives Name and Salary
-    public Teacher(string name, double salary, string courseName) : base(name, salary)
-    {
-        CourseName = courseName;
-    }
-
-    // Override DisplayInfo
-    public override void DisplayInfo()
-    {
-        base.DisplayInfo();
-        Console.WriteLine($"Course Name: {CourseName}");
+        return Width * Height;
     }
 }
 
 class Program
 {
-    // Method that accepts Person and calls DisplayInfo()
-    static void PrintPersonDetails(Person person)
-    {
-        person.DisplayInfo();
-    }
-
     static void Main()
     {
-        // 1. Store at least one object of each type in List<Person>
-        List<Person> people = new List<Person>
+        List<Shape> shapes = new List<Shape>
         {
-            new Person("Sami"),
-            new Student("Sara", 1001),
-            new Employee("Fahad", 5000.0),
-            new Teacher("Dr. Omar", 8000.0, "Object Oriented Programming")
+            new Circle(5),
+            new Rectangle(4, 6)
         };
 
-        // 2. Use one foreach loop to call DisplayInfo() & Print GetType()
-        Console.WriteLine("--- University Members List ---");
-        foreach (Person person in people)
+        foreach (Shape shape in shapes)
         {
-            // Print GetType() to compare runtime types
-            Console.WriteLine($"[Type: {person.GetType().Name}]");
-            person.DisplayInfo();
-            Console.WriteLine("---------------------------------");
+            Console.WriteLine($"Runtime Type: {shape.GetType().Name}");
+            Console.WriteLine($"Area: {shape.CalculateArea():F2}");
+            Console.WriteLine("------------------------");
         }
-
-        // 3. Testing the standalone method that accepts Person
-        Console.WriteLine("\n--- Testing Method That Accepts Person ---");
-        Person sampleTeacher = new Teacher("Dr. Mona", 7500.0, "Data Structures");
-        PrintPersonDetails(sampleTeacher);
     }
 }
