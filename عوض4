@@ -1,0 +1,96 @@
+using System;
+using System.Collections.Generic;
+
+class Person
+{
+    public string Name { get; set; }
+
+    public Person(string name)
+    {
+        Name = name;
+    }
+
+    public virtual void DisplayInfo()
+    {
+        Console.WriteLine($"Name: {Name}");
+    }
+}
+
+class Student : Person
+{
+    public int StudentId { get; set; }
+
+    public Student(string name, int studentId) : base(name)
+    {
+        StudentId = studentId;
+    }
+
+    public override void DisplayInfo()
+    {
+        base.DisplayInfo();
+        Console.WriteLine($"Student ID: {StudentId}");
+    }
+}
+
+class Employee : Person
+{
+    public double Salary { get; set; }
+
+    public Employee(string name, double salary) : base(name)
+    {
+        Salary = salary;
+    }
+
+    public override void DisplayInfo()
+    {
+        base.DisplayInfo();
+        Console.WriteLine($"Salary: ${Salary}");
+    }
+}
+
+class Teacher : Employee
+{
+    public string CourseName { get; set; }
+
+    public Teacher(string name, double salary, string courseName) : base(name, salary)
+    {
+        CourseName = courseName;
+    }
+
+    public override void DisplayInfo()
+    {
+        base.DisplayInfo();
+        Console.WriteLine($"Course: {CourseName}");
+    }
+}
+
+class Program
+{
+    // Method that accepts Person and calls DisplayInfo()
+    static void PrintPerson(Person person)
+    {
+        person.DisplayInfo();
+    }
+
+    static void Main()
+    {
+        List<Person> members = new List<Person>
+        {
+            new Person("Sami"),
+            new Student("Mona", 2001),
+            new Employee("Khaled", 4500),
+            new Teacher("Dr. Hassan", 8000, "C# Programming")
+        };
+
+        Console.WriteLine("--- University Members Info ---");
+        foreach (Person member in members)
+        {
+            Console.WriteLine($"[Runtime Type: {member.GetType().Name}]");
+            member.DisplayInfo();
+            Console.WriteLine("------------------------------");
+        }
+
+        Console.WriteLine("\n--- Testing Single Parameter Method ---");
+        PrintPerson(new Teacher("Dr. Sara", 9000, "Database Systems"));
+    }
+}
