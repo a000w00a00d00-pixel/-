@@ -1,0 +1,74 @@
+using System;
+
+// Base Class (الكلاس الأب)
+class Vehicle
+{
+    public string Brand { get; set; }
+    public int Year { get; set; }
+
+    // Constructor
+    public Vehicle(string brand, int year)
+    {
+        Brand = brand;
+        Year = year;
+    }
+
+    // Method
+    public void Start()
+    {
+        Console.WriteLine($"{Year} {Brand} is starting...");
+    }
+}
+
+// Derived Class 1: Car
+class Car : Vehicle
+{
+    public int NumberOfDoors { get; set; }
+
+    // Constructor calling base(...)
+    public Car(string brand, int year, int numberOfDoors) : base(brand, year)
+    {
+        NumberOfDoors = numberOfDoors;
+    }
+}
+
+// Derived Class 2: Bus
+class Bus : Vehicle
+{
+    public int Capacity { get; set; }
+
+    // Constructor calling base(...)
+    public Bus(string brand, int year, int capacity) : base(brand, year)
+    {
+        Capacity = capacity;
+    }
+}
+
+// Derived Class 3: Motorcycle
+class Motorcycle : Vehicle
+{
+    public bool HasSidecar { get; set; }
+
+    // Constructor calling base(...)
+    public Motorcycle(string brand, int year, bool hasSidecar) : base(brand, year)
+    {
+        HasSidecar = hasSidecar;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        // 1. Create objects from derived classes
+        Car myCar = new Car("Toyota", 2022, 4);
+        Bus myBus = new Bus("Volvo", 2018, 50);
+        Motorcycle myBike = new Motorcycle("Harley-Davidson", 2021, false);
+
+        // 2. Call Start() method on each object
+        Console.WriteLine("--- Testing Vehicles ---");
+        myCar.Start();
+        myBus.Start();
+        myBike.Start();
+    }
+}
