@@ -1,0 +1,77 @@
+using System;
+
+class Person
+{
+    public string Name { get; set; }
+    public string Email { get; set; }
+
+    public Person(string name, string email)
+    {
+        Console.WriteLine("Person Constructor Executed");
+        Name = name;
+        Email = email;
+    }
+
+    public void DisplayBasicInfo()
+    {
+        Console.WriteLine($"Name: {Name}, Email: {Email}");
+    }
+}
+
+class Student : Person
+{
+    public int StudentId { get; set; }
+    public double GPA { get; set; }
+
+    public Student(string name, string email, int studentId, double gpa) : base(name, email)
+    {
+        Console.WriteLine("Student Constructor Executed");
+        StudentId = studentId;
+        GPA = gpa;
+    }
+}
+
+class Employee : Person
+{
+    public int EmployeeId { get; set; }
+    public double Salary { get; set; }
+
+    public Employee(string name, string email, int employeeId, double salary) : base(name, email)
+    {
+        Console.WriteLine("Employee Constructor Executed");
+        EmployeeId = employeeId;
+        Salary = salary;
+    }
+}
+
+class Teacher : Employee
+{
+    public string CourseName { get; set; }
+
+    public Teacher(string name, string email, int employeeId, double salary, string courseName) 
+        : base(name, email, employeeId, salary)
+    {
+        Console.WriteLine("Teacher Constructor Executed");
+        CourseName = courseName;
+    }
+
+    public void Teach()
+    {
+        Console.WriteLine($"Teaching {CourseName} course...");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("--- Creating Student ---");
+        Student student = new Student("Ali", "ali@mail.com", 101, 3.8);
+        student.DisplayBasicInfo(); // Inherited method
+
+        Console.WriteLine("\n--- Creating Teacher ---");
+        Teacher teacher = new Teacher("Dr. Ahmed", "ahmed@univ.edu", 501, 7500, "OOP");
+        teacher.DisplayBasicInfo(); // Inherited method
+        teacher.Teach();            // Specialized method
+    }
+}
